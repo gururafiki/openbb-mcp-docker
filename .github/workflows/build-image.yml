@@ -4,11 +4,17 @@ name: Build & push image
 on:
   push:
     branches: [main]
+  # Build on PRs too, WITHOUT pushing. Without this a dependency bump here is
+  # verified by nothing: the image was first built after merge, so a broken
+  # base image or an unresolvable dependency landed on main before anyone
+  # found out.
+  pull_request:
   workflow_dispatch:
 
 concurrency:
   group: build-${{ github.ref }}
-  cancel-in-progress: true
+  # NEVER cancel a `main` build: it is the run that verifies what ships.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
@@ -20,6 +26,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
       - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
@@ -30,7 +37,7 @@ jobs:
         with:
           context: .
           platforms: linux/arm64
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ghcr.io/${{ github.repository_owner }}/openbb-mcp-docker:latest
             ghcr.io/${{ github.repository_owner }}/openbb-mcp-docker:${{ github.sha }}

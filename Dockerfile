@@ -1,4 +1,4 @@
-FROM python:3.13-slim
+FROM python:3.14-slim
 
 # THE PACKAGE SET IS PINNED, because `openbb[all]` resolved on the day of a build is not the image
 # that was tested. constraints.txt is the deployed image's own `pip freeze`, so a rebuild changes

@@ -175,7 +175,7 @@ scipy==1.18.0
 SecretStorage==3.5.0
 setuptools-scm==8.3.1
 six==1.17.0
-soupsieve==2.9.2
+soupsieve==3.0.3
 sse-starlette==3.4.8
 starlette==1.6.0
 statsmodels==0.14.6

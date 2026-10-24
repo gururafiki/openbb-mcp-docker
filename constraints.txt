@@ -101,7 +101,7 @@ openbb-derivatives==1.6.2
 openbb-ecb==1.6.1
 openbb-econdb==1.5.1
 openbb-econometrics==1.7.2
-openbb-economy==1.6.2
+openbb-economy==2.0.0
 openbb-equity==1.6.2
 openbb-etf==1.6.2
 openbb-famafrench==1.2.1
